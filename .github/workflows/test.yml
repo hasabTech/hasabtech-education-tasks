@@ -1,47 +1,76 @@
-name: Run Specific Tests
+name: Run Tests
 
 on:
+  push:
+    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
 jobs:
-  set-folder:
+  test:
     runs-on: ubuntu-latest
-    outputs:
-      test_folder: ${{ steps.set-folder.outputs.test_folder }}
+    
+    strategy:
+      matrix:
+        node-version: [16, 18, 20]
+    
     steps:
-      - name: Detect folder from PR title
-        id: set-folder
-        run: |
-          TITLE="${{ github.event.pull_request.title }}"
-          if [[ "$TITLE" =~ ^TASK-JS-BASICS- ]]; then
-            echo "test_folder=js-basics" >> $GITHUB_OUTPUT
-          elif [[ "$TITLE" =~ ^TASK-JS-INTERMEDIATE- ]]; then
-            echo "test_folder=js-intermediate" >> $GITHUB_OUTPUT
-          elif [[ "$TITLE" =~ ^TASK-JS-ADVANCED- ]]; then
-            echo "test_folder=js-advanced" >> $GITHUB_OUTPUT
-          else
-            echo "test_folder=all" >> $GITHUB_OUTPUT
-          fi
-
-  run-tests:
-    needs: set-folder
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-          cache: 'npm'
-
-      - run: npm ci
-
-      - name: Run tests for folder
-        run: |
-          if [ "${{ needs.set-folder.outputs.test_folder }}" = "all" ]; then
-            npm test
-          else
-            npm test -- ${{ needs.set-folder.outputs.test_folder }}
-          fi
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Determine test scope
+      id: test-scope
+      run: |
+        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          PR_TITLE="${{ github.event.pull_request.title }}"
+        else
+          PR_TITLE=""
+        fi
+        
+        echo "PR Title: $PR_TITLE"
+        
+        if [[ "$PR_TITLE" == TASK-JS-BASICS-* ]]; then
+          echo "scope=js-basics" >> $GITHUB_OUTPUT
+          echo "Running js-basics tests only"
+        elif [[ "$PR_TITLE" == TASK-JS-INTERMEDIATE-* ]]; then
+          echo "scope=js-intermediate" >> $GITHUB_OUTPUT
+          echo "Running js-intermediate tests only"
+        elif [[ "$PR_TITLE" == TASK-JS-ADVANCED-* ]]; then
+          echo "scope=js-advanced" >> $GITHUB_OUTPUT
+          echo "Running js-advanced tests only"
+        else
+          echo "scope=all" >> $GITHUB_OUTPUT
+          echo "Running all tests"
+        fi
+    
+    - name: Run js-basics tests
+      if: steps.test-scope.outputs.scope == 'js-basics' || steps.test-scope.outputs.scope == 'all'
+      run: npm test -- js-basics
+    
+    - name: Run js-intermediate tests
+      if: steps.test-scope.outputs.scope == 'js-intermediate' || steps.test-scope.outputs.scope == 'all'
+      run: npm test -- js-intermediate
+    
+    - name: Run js-advanced tests
+      if: steps.test-scope.outputs.scope == 'js-advanced' || steps.test-scope.outputs.scope == 'all'
+      run: npm test -- js-advanced
+    
+    - name: Generate coverage report
+      if: steps.test-scope.outputs.scope == 'all' && matrix.node-version == '20'
+      run: npm run test:coverage
+    
+    - name: Upload coverage to Codecov
+      if: steps.test-scope.outputs.scope == 'all' && matrix.node-version == '20'
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: false
