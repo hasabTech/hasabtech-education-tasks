@@ -187,6 +187,16 @@ The GitHub Action workflow will automatically detect the prefix and run only the
 
 ---
 
+## Submitting Your Work
+1. Fork the repo
+2. Create a branch with your name and task:
+`git checkout -b TASK-JS-BASICS-<STUDENT_NAME>`
+3. Push your changes and open a PR:
+- PR Title: `TASK-JS-BASICS-YOURNAME`
+4. Wait for GitHub Actions to run. Your results will appear in the PR.
+
+
+
 ## 🤝 Contributing
 
 If you find issues or have suggestions for improvements:
