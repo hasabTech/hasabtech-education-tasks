@@ -3,8 +3,11 @@
 // TODO: Create a function called 'isAdult' that takes one parameter (age)
 // TODO: Return "Adult" if age is 18 or greater, otherwise return "Minor"
 
-// function isAdult(age) {
-//   // Your code here
-// }
+
+function isAdult(age) {
+  return age >= 18 ? "Adult" : "Minor";
+}
+
+module.exports = { isAdult };
 
 // TODO: Export the isAdult function

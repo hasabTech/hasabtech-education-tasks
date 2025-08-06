@@ -2,8 +2,11 @@
 
 // TODO: Create a function called 'add' that takes two parameters (a, b)
 // TODO: Return the sum of a and b
-// function add(a, b) {
-//   // Your code here
-// }
+
+function add(a, b) {
+  return a + b;
+}
+
+module.exports = { add };
 
 
