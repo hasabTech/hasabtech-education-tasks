@@ -22,6 +22,7 @@ jobs:
             echo "test_folder=js-advanced" >> $GITHUB_OUTPUT
           else
             echo "test_folder=all" >> $GITHUB_OUTPUT
+          fi
 
   run-tests:
     needs: set-folder
