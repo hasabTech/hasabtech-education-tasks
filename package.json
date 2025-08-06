@@ -1,0 +1,26 @@
+{
+  "name": "hasabtech-js-basic-tasks",
+  "version": "1.0.0",
+  "description": "JavaScript basic tasks for learning fundamental concepts",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:js-basics": "jest js-basics",
+    "test:js-intermediate": "jest js-intermediate",
+    "test:js-advanced": "jest js-advanced"
+  },
+  "keywords": [
+    "javascript",
+    "learning",
+    "tasks",
+    "basics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

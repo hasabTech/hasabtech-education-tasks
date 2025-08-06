@@ -1,0 +1,46 @@
+name: Run Specific Tests
+
+on:
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  set-folder:
+    runs-on: ubuntu-latest
+    outputs:
+      test_folder: ${{ steps.set-folder.outputs.test_folder }}
+    steps:
+      - name: Detect folder from PR title
+        id: set-folder
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          if [[ "$TITLE" =~ ^TASK-JS-BASICS- ]]; then
+            echo "test_folder=js-basics" >> $GITHUB_OUTPUT
+          elif [[ "$TITLE" =~ ^TASK-JS-INTERMEDIATE- ]]; then
+            echo "test_folder=js-intermediate" >> $GITHUB_OUTPUT
+          elif [[ "$TITLE" =~ ^TASK-JS-ADVANCED- ]]; then
+            echo "test_folder=js-advanced" >> $GITHUB_OUTPUT
+          else
+            echo "test_folder=all" >> $GITHUB_OUTPUT
+
+  run-tests:
+    needs: set-folder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run tests for folder
+        run: |
+          if [ "${{ needs.set-folder.outputs.test_folder }}" = "all" ]; then
+            npm test
+          else
+            npm test -- ${{ needs.set-folder.outputs.test_folder }}
+          fi
