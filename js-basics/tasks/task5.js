@@ -8,8 +8,15 @@
 // 60-69: "D"
 // Below 60: "F"
 
-// function getGrade(score) {
-//   // Your code here using if-else statements
-// }
+
+function getGrade(score) {
+  if (score >= 90) return "A";
+  if (score >= 80) return "B";
+  if (score >= 70) return "C";
+  if (score >= 60) return "D";
+  return "F";
+}
+
+module.exports = { getGrade };
 
 // TODO: Export the getGrade function

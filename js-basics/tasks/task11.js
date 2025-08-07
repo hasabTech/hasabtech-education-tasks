@@ -5,8 +5,20 @@
 // TODO: 1 = "Monday", 2 = "Tuesday", ..., 7 = "Sunday"
 // TODO: Return "Invalid day" for numbers outside 1-7
 
-// function getDayName(dayNumber) {
-//   // Your code here using switch statement
-// }
+
+function getDayName(dayNumber) {
+  switch (dayNumber) {
+    case 1: return "Monday";
+    case 2: return "Tuesday";
+    case 3: return "Wednesday";
+    case 4: return "Thursday";
+    case 5: return "Friday";
+    case 6: return "Saturday";
+    case 7: return "Sunday";
+    default: return "Invalid day";
+  }
+}
+
+module.exports = { getDayName };
 
 // TODO: Export the getDayName function
