@@ -2,7 +2,8 @@
 
 // TODO: Create a variable called 'name' and assign your name as a string
 // const name = "Shameel Uddin";
-
+const name = "Ammad Ahmed";
+module.exports = {name};
 // TODO: Export the name variable
 // module.exports = { name };
 
