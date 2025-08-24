@@ -9,3 +9,8 @@
 // }
 
 // TODO: Export the countProperties function
+function countProperties(obj) {
+  return Object.keys(obj).length;
+}
+
+module.exports = { countProperties };   

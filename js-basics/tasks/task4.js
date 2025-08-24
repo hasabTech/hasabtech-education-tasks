@@ -9,4 +9,19 @@
 // }
 
 // TODO: Export the isEven function
+ 
 
+let num = 16;
+function isEven(num) {
+  return num % 2 === 0;
+  
+}
+
+function isOdd(num) {
+  return num % 2 !== 0;
+}
+
+module.exports = {
+  isEven,
+  isOdd
+};

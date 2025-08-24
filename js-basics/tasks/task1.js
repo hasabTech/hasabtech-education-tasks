@@ -9,3 +9,6 @@
 // Example (uncomment and modify):
 // const name = "Shameel Uddin";
 // module.exports = { name };
+ 
+const name = "yasir ahmed";
+module.exports = {name};
