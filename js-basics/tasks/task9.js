@@ -4,8 +4,20 @@
 // TODO: Find and return the largest number in the array
 // TODO: You can use Math.max() or iterate through the array
 
-// function findMax(arr) {
-//   // Your code here
-// }
+function findMax(arr) {
+  let max = arr[0];
+  
+  for (let i = 1; i < arr.length; i++) {
+    
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+    
+  }
+  return max;
+}
+
+module.exports = { findMax };
+
 
 // TODO: Export the findMax function
