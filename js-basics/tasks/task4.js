@@ -4,9 +4,13 @@
 // TODO: Return true if the number is even, false if odd
 // Hint: Use the modulo operator (%) to check if a number is divisible by 2
 
-// function isEven(num) {
-//   // Your code here
-// }
-
-// TODO: Export the isEven function
-
+function isEven(num) {
+    if(num%2 == 0)
+    {
+        return true
+    }
+    else{
+        return false
+    }
+}
+module.exports = { isEven }
