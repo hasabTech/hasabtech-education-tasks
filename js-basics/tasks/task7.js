@@ -9,3 +9,9 @@
 // }
 
 // TODO: Export the sumArray function
+
+function sumArray(arr) {
+  return arr.reduce((total, num) => total + num, 0);
+}
+
+module.exports = { sumArray };

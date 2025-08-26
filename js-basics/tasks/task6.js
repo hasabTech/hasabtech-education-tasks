@@ -8,3 +8,10 @@
 // }
 
 // TODO: Export the isAdult function
+
+
+function isAdult(age) {
+  return age >= 18 ? "Adult" : "Minor";
+}
+
+module.exports = { isAdult };

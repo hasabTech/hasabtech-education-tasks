@@ -9,3 +9,15 @@
 // }
 
 // TODO: Export the countProperties function
+
+function countProperties(obj) {
+  var count = 0;
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      count = count + 1;
+    }
+  }
+  return count;
+}
+
+module.exports = { countProperties };
