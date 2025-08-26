@@ -9,3 +9,16 @@
 // }
 
 // TODO: Export the factorial function
+
+function factorial(n) {
+  if (n === 0) {
+    return 1;
+  }
+  var result = 1;
+  for (var i = 1; i <= n; i++) {
+    result = result * i;
+  }
+  return result;
+}
+
+module.exports = { factorial };

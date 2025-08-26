@@ -6,6 +6,5 @@
 // TODO: Export the name variable
 // module.exports = { name };
 
-// Example (uncomment and modify):
-// const name = "Shameel Uddin";
-// module.exports = { name };
+const name = "Abdullah Imran";
+module.exports = { name };
